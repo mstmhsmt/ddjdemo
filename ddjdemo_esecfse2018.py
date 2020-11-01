@@ -111,7 +111,7 @@ def get_nparts(proj_id, container_cmd=CONTAINER_CMD):
 
     try:
         out = int(check_output(cmd, shell=True,universal_newlines=True))
-    except Exception, e:
+    except Exception as e:
         print('[WARNING] %s' % str(e))
         out = 1
 
@@ -312,9 +312,9 @@ def update(args):
             print('execution failed: %s' % e)
 
 def run(args):
-    if not args.ex and not args.part:# and not args.all:
+    if args.ex == None and args.part == None and not args.all:
         print('Specify example (-e N) or part (-p N).')
-        # print('Use "--all" option if you want to process all examples')
+        print('Use "--all" option if you want to process all examples')
     else:
         run_cmd(args.proj_id, container_cmd=args.container_cmd,
                 algo=args.algo, mem=args.mem, staged=args.staged,
@@ -397,8 +397,8 @@ def main():
     parser_run.add_argument('-p', '--part', dest='part', metavar='N', type=int,
                             help='specify part number', default=None)
 
-    # parser_run.add_argument('--all', dest='all', action='store_true',
-    #                         help='process all examples')
+    parser_run.add_argument('--all', dest='all', action='store_true',
+                            help='process all examples')
 
     parser_run.add_argument('-k', '--keep', dest='keep', action='store_true',
                             help='keep container')
